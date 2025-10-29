@@ -82,10 +82,17 @@
         updateMetaTag('property', 'og:type', 'article');
         if (p.date) updateMetaTag('property', 'article:published_time', p.date);
         if (p.image) {
-          const imageUrl = p.image.startsWith('http') ? p.image : new URL(p.image, window.location.origin).href;
+          // Convert relative paths to absolute URLs for social media
+          let imageUrl = p.image;
+          if (!p.image.startsWith('http')) {
+            // For GitHub Pages, construct the full URL
+            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+            imageUrl = new URL(p.image, baseUrl).href;
+          }
           updateMetaTag('property', 'og:image', imageUrl);
           updateMetaTag('property', 'og:image:width', '1200');
           updateMetaTag('property', 'og:image:height', '630');
+          updateMetaTag('property', 'og:image:alt', p.title);
           updateMetaTag('property', 'og:image:type', 'image/png');
         }
         // Twitter
@@ -93,7 +100,13 @@
         updateMetaTag('name', 'twitter:title', p.title);
         updateMetaTag('name', 'twitter:description', p.excerpt || '');
         if (p.image) {
-          const imageUrl = p.image.startsWith('http') ? p.image : new URL(p.image, window.location.origin).href;
+          // Convert relative paths to absolute URLs for social media
+          let imageUrl = p.image;
+          if (!p.image.startsWith('http')) {
+            // For GitHub Pages, construct the full URL
+            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+            imageUrl = new URL(p.image, baseUrl).href;
+          }
           updateMetaTag('name', 'twitter:image', imageUrl);
         }
         // Canonical link
