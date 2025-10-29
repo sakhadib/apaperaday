@@ -15,7 +15,7 @@
 <body class="bg-white text-gray-900 font-sans antialiased">
   <header class="sticky top-0 z-10 bg-white/95 border-b">
     <div class="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-extrabold tracking-tight text-gray-900">Paper-a-Day</a>
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight text-gray-900">A Paper A Day</a>
       <nav class="text-sm text-gray-600">
         <a href="index.html" class="mr-4 hover:underline">Home</a>
       </nav>
@@ -70,6 +70,34 @@
       if (!p) {
         renderNotFound();
       } else {
+        // Update SEO meta tags
+        document.title = escapeHtml(p.title) + " — Paper-a-Day";
+        updateMetaTag('name', 'description', p.excerpt || '');
+        updateMetaTag('name', 'keywords', Array.isArray(p.tags) ? p.tags.join(', ') : '');
+        updateMetaTag('name', 'author', window.author.name);
+        // Open Graph
+        updateMetaTag('property', 'og:title', p.title);
+        updateMetaTag('property', 'og:description', p.excerpt || '');
+        updateMetaTag('property', 'og:url', window.location.href);
+        updateMetaTag('property', 'og:type', 'article');
+        if (p.date) updateMetaTag('property', 'article:published_time', p.date);
+        if (p.image) updateMetaTag('property', 'og:image', p.image);
+        // Twitter
+        updateMetaTag('name', 'twitter:card', 'summary');
+        updateMetaTag('name', 'twitter:title', p.title);
+        updateMetaTag('name', 'twitter:description', p.excerpt || '');
+        if (p.image) updateMetaTag('name', 'twitter:image', p.image);
+        // Canonical link
+        if (p.link) {
+          let canonical = document.querySelector('link[rel="canonical"]');
+          if (!canonical) {
+            canonical = document.createElement('link');
+            canonical.rel = 'canonical';
+            document.head.appendChild(canonical);
+          }
+          canonical.href = p.link;
+        }
+
         postEl.innerHTML = `
           <header>
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">${escapeHtml(p.title)}</h1>
@@ -78,7 +106,15 @@
               <span>·</span>
               <span>${readingTime(p)}</span>
             </div>
+            <div class="mt-4 flex items-center gap-3">
+              <img src="${escapeHtml(window.author.image)}" alt="${escapeHtml(window.author.name)}" class="w-10 h-10 rounded-full">
+              <div>
+                <div class="font-medium text-gray-900">${escapeHtml(window.author.name)}</div>
+                <div class="text-sm text-gray-500">${escapeHtml(window.author.affiliation)}</div>
+              </div>
+            </div>
           </header>
+          ${p.image ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" class="w-full max-w-3xl mx-auto aspect-video object-cover rounded-lg mt-8 mb-8">` : ''}
           <div class="mt-8 text-gray-900 leading-8 text-[1.1rem] space-y-6">${p.post ? renderMarkdownLike(p.post) : ''}</div>
           ${p.citation ? `<div class="mt-8 text-sm text-gray-700"><strong class="font-semibold">Citation:</strong> ${renderInlineLinks(p.citation)}</div>` : ''}
           ${Array.isArray(p.tags) && p.tags.length ? `<div class="mt-8 flex flex-wrap gap-2">${p.tags.map(t => `<span class="text-xs bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full border">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
@@ -113,6 +149,16 @@
       }
       out += escapeHtml(text.slice(lastIndex));
       return out;
+    }
+
+    function updateMetaTag(attr, value, content) {
+      let meta = document.querySelector(`meta[${attr}="${value}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute(attr, value);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
     }
   </script>
 </body>
