@@ -81,12 +81,21 @@
         updateMetaTag('property', 'og:url', window.location.href);
         updateMetaTag('property', 'og:type', 'article');
         if (p.date) updateMetaTag('property', 'article:published_time', p.date);
-        if (p.image) updateMetaTag('property', 'og:image', p.image);
+        if (p.image) {
+          const imageUrl = p.image.startsWith('http') ? p.image : new URL(p.image, window.location.origin).href;
+          updateMetaTag('property', 'og:image', imageUrl);
+          updateMetaTag('property', 'og:image:width', '1200');
+          updateMetaTag('property', 'og:image:height', '630');
+          updateMetaTag('property', 'og:image:type', 'image/png');
+        }
         // Twitter
-        updateMetaTag('name', 'twitter:card', 'summary');
+        updateMetaTag('name', 'twitter:card', 'summary_large_image');
         updateMetaTag('name', 'twitter:title', p.title);
         updateMetaTag('name', 'twitter:description', p.excerpt || '');
-        if (p.image) updateMetaTag('name', 'twitter:image', p.image);
+        if (p.image) {
+          const imageUrl = p.image.startsWith('http') ? p.image : new URL(p.image, window.location.origin).href;
+          updateMetaTag('name', 'twitter:image', imageUrl);
+        }
         // Canonical link
         if (p.link) {
           let canonical = document.querySelector('link[rel="canonical"]');
