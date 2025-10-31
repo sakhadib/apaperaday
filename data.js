@@ -213,7 +213,7 @@ Are Rules Meant to be Broken? Understanding Multilingual Moral  as a Computation
     title : "All That Glitters is Not Novel: Plagiarism in AI Generated Research",
     link : "https://aclanthology.org/2025.acl-long.1249/",
     date : "2025-10-31",
-    image : "image/30-10-25.jpg",
+    image : "image/30-10-25.png",
     citation : "[All That Glitters is Not Novel: Plagiarism in AI Generated Research](https://aclanthology.org/2025.acl-long.1249/) (Gupta & Pruthi, ACL 2025)",
     excerpt : `A short summary about plagiarism in AI generated research.`,
     post : `আজকে ষষ্ঠ দিন, আর আজকে যে পেপারটা পড়েছি, আমার মতে সেইটা আমারমতই যারা নতুন নতুন গবেষণার দুনিয়ায় এসেছে সবার বুঝা দরকার। পেপার NLP নিয়ে হলেও ACL এর আউটস্ট্যান্ডিং পেপার এর খেতাব পাওয়া এই গবেষণাপত্র দেখায় যে, জিপিটি বা জেমিনি বা এরকম যেকোন আর্টিফিসিয়াল ইন্টেলিজেন্স দিয়ে আপনি যখন আপনার পেপার লিখিয়ে নিবেন তখন ঐ পেপার এর বিশাল অংশ আসলে প্লেজারিজম। কিন্তু বলবেন, আরে ভাই লিখাইলাম, টার্ন-ইট-ইন এ দিলাম। ৫% - ৬% প্লেজারিজম দেখায়। মজার বিষয় হল, AI গুলোকে তৈরিই করা হয়েছে ঘুরিয়ে কথা বলার জন্য। আর টার্ণ-ইট-ইন এতটাও বুদ্ধিমান না যে ঘুরিয়ে বলা সব কথা ধরে ফেলবে। আসুন দেখি গবেষকরা কি বলেন,
